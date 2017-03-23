@@ -227,10 +227,12 @@ while 1
     theta0=theta0-cos_b*alpha;
     j=subs(f,a,theta1);
     j=subs(j,b,theta0);
-    f = theta1 * x + theta0;
-    plot(x,y,'r+',x,f)
-    hold on
     vpa(k-j,5)
+    if k-j < 0.1
+        f = theta1 * x + theta0;
+        plot(x,y,'r+',x,f)
+        hold on
+    end
     if k-j<0.02
         break;
     end
