@@ -201,28 +201,50 @@ y=[1.1717629e+00
 scatter(x,y,'o','p')
 
 theta1=mean(y)/mean(x);
+<<<<<<< HEAD
 theta0=y(1)-theta1*x(1);
 
 alpha=0.0001;
+=======
+theta0=mean(y)-theta1*mean(x);
+
+alpha=30;
+>>>>>>> f7ca7dd321f12d71b886ce6ed1b0046905e2828b
 time = 0;
 n=size(x);
 old_k = 0;
 while 1
     syms a b 
     f = 0;
+<<<<<<< HEAD
+=======
+    theta1=vpa(theta1,10);
+    theta0=vpa(theta0,10);
+>>>>>>> f7ca7dd321f12d71b886ce6ed1b0046905e2828b
     for i = 1:n
         f=f+(a*x(i)+b-y(i))^2;
     end
     diffa=diff(f,a);
     diffb=diff(f,b);
+<<<<<<< HEAD
     cos_a=subs(diffa,a,theta1);
     cos_a=subs(cos_a,b,theta0);
     cos_b=subs(diffb,a,theta1);
     cos_b=subs(cos_b,b,theta0);
+=======
+    cos_a=subs(diffa,a,theta0);
+    cos_a=subs(cos_a,b,theta1);
+    cos_b=subs(diffb,a,theta0);
+    cos_b=subs(cos_b,b,theta1);
+    t=cos_a^2+cos_b^2;
+    cos_a=cos_a/t;
+    cos_b=cos_b/t;
+>>>>>>> f7ca7dd321f12d71b886ce6ed1b0046905e2828b
     old_theta1=theta1;
     old_theta0=theta0;
     k=subs(f,a,old_theta1);
     k=subs(k,b,old_theta0);
+<<<<<<< HEAD
     theta1=theta1-cos_a*alpha;
     theta0=theta0-cos_b*alpha;
     j=subs(f,a,theta1);
@@ -235,6 +257,23 @@ while 1
         break;
     end
     if j>k
+=======
+    theta1=theta1+cos_a*alpha;
+    theta0=theta0+cos_b*alpha;
+    theta1=vpa(theta1,10);
+    theta0=vpa(theta0,10);
+    j=subs(f,a,theta1);
+    j=subs(j,b,theta0);
+    if(j-k>0)
+        theta1=old_theta1-cos_a*alpha;
+        theta0=old_theta0-cos_b*alpha;
+    end
+    f = theta1 * x + theta0;
+    plot(x,y,'r+',x,f)
+    hold on
+    time = time +1 ;
+    if  j-k>-0.1 && j-k<0.1
+>>>>>>> f7ca7dd321f12d71b886ce6ed1b0046905e2828b
         break;
     end
 end
